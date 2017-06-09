@@ -208,7 +208,7 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                                 + "<th>POS</th>"
                                 + "<th>Endereco</th>"
                                 + "<th>Referencia</th>"
-                                + "<tr></thead>"
+                                + "</tr></thead>"
                                 + "<tbody></tbody></table>");
                 $tbody = $table.find('tbody');
                	console.log('Iniciar Impressão de Tela!');	
@@ -237,7 +237,7 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                                 + '<td width="130px">' + phones.replace(/[,]/gm, '') + '</td>'
                                 + '<td>' + poss.replace(/,/gm, '') + '</td>'
                                 + '<td>' + (vendedor.address.address === undefined ? '' : vendedor.address.address) + ', ' + (vendedor.address.number === undefined ? '' : vendedor.address.number) +  '</td>'
-                                + '<td>' + (vendedor.address.complement === undefined ? '' : vendedor.address.complement) 
+                                + '<td>' + (vendedor.address.complement === undefined ? '' : vendedor.address.complement) + '</td>
                                 + '</tr>'
                               );
                   $tbody.append($tr);

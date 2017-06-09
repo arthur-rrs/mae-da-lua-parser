@@ -214,7 +214,8 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                	console.log('Iniciar Impressão de Tela!');	
 		vendedores.forEach(function(vendedor) {
 		  var WEEK = 9 * 24 * 60 * 60 * 1000;
-	          if ( vendedor.address.dateCreated.valueOf() > (Date.now() - WEEK) ) {
+		  var isNewSaler = vendedor.address.dateCreated.valueOf() > (Date.now() - WEEK);	
+	          if ( isNewSaler ) {
 		  	vendedor.name = "<strong>(Novata(o)) " + vendedor.name + "</strong>";
 		  } 
 
@@ -228,7 +229,8 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                     poss += pos;
                     poss += ', ';
                   });
-                  $tr = jQuery('<tr>'
+		  	
+                  $tr = jQuery('<tr' + (isNewSaler ? 'bgcolor="#000000"' : '') + '>' +
                                 + '<td>' + vendedor.address.district + ' - ' + vendedor.address.city + '</td>'
                                 + '<td>' + vendedor.login + '</td>'
                                 + '<td>' + vendedor.name + '</td>'

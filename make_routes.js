@@ -230,12 +230,12 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                     poss += ', ';
                   });
 		  	
-                  $tr = jQuery('<tr>' 
+                  $tr = jQuery('<tr' + (isNewSaler ? 'bgcolor="#000000"' : "" ) + '>' 
                                 + '<td>' + vendedor.address.district + ' - ' + vendedor.address.city + '</td>'
                                 + '<td>' + vendedor.login + '</td>'
                                 + '<td>' + vendedor.name + '</td>'
                                 + '<td width="130px">' + phones.replace(/[,]/gm, '') + '</td>'
-                                + '<td>' + poss.replace(/,/gm, '') + '</td>'
+                                + '<td width="90px">' + poss.replace(/,/gm, '<br>') + '</td>'
                                 + '<td>' + (vendedor.address.address === undefined ? '' : vendedor.address.address) + ', ' + (vendedor.address.number === undefined ? '' : vendedor.address.number) +  '</td>'
                                 + '<td>' + (vendedor.address.complement === undefined ? '' : vendedor.address.complement) + '</td>'
                                 + '</tr>'

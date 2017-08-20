@@ -1,0 +1,30 @@
+body {
+	font-size : 15pt; 
+	padding   : 0;     
+}
+
+table {
+	border-collapse : collapse;
+}
+
+.divisor-sale {
+	background-color : #c7c7c7;
+}
+.cel-without-border {
+	border : none;
+}
+
+td, th {
+	width : 400px;
+}
+
+table, td, th{
+	border : 1px solid #000;
+	
+}
+
+@print {
+	.divisor-sale {
+		background-color: #c7c7c7;
+	}
+}

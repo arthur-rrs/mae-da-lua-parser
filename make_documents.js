@@ -206,7 +206,7 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                   $body.append('<br>');
                   $body.append('<p>_____________________________________________________________</p>');
                   $body.append(vendedor.address.name_completed);
-		  $body.append('<br><br> <p>Cabo de Santo Agostinho, _________ de _____________________________ de _____________</p><br>');	
+		  $body.append('<br><br> <p>Cabo de Santo Agostinho, _______ de ______________________ de ________</p><br>');	
                   $body.append('<hr>');
                   if( (index+1) % 2 == 0 ) {
                     $body.append('<p style="page-break-before: always;"></p>');

@@ -187,6 +187,7 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                 $body.css('margin-left', '1pt');
                 $body.empty();
                 vendedores.forEach(function(vendedor, index) {
+	          $body.append('<hr><p>Login:' + vendedor.login + '</p>');
                   $body.append('<p>Nome Curto(Apelido):'+ vendedor.name + '</p>');
                   $body.append('<h1>Termo de Entrega</h1>')
                   $body.append('<hr>');

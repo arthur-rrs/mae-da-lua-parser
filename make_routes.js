@@ -217,7 +217,7 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                     poss += pos;
                     poss += ', ';
                   });
-		  	
+		  var isNewSaler = false;	
                   $tr = jQuery('<tr' + (isNewSaler ? ' class="active" ' : "" ) + '>' 
                                 + '<td>' + vendedor.address.district + ' - ' + vendedor.address.city + '</td>'
                                 + '<td>' + vendedor.login + '</td>'

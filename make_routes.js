@@ -205,11 +205,7 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                 $tbody = $table.find('tbody');
                	console.log('Iniciar Impressão de Tela!');	
 		vendedores.forEach(function(vendedor) {
-		  var WEEK = 9 * 24 * 60 * 60 * 1000;
-		  var isNewSaler = vendedor.address.dateCreated.valueOf() > (Date.now() - WEEK);	
-	          if ( isNewSaler ) {
-		  	vendedor.name = "<strong>(Novata(o)) " + vendedor.name + "</strong>";
-		  } 
+		
 
                   phones = '';
                   poss  = '';

@@ -191,15 +191,7 @@ jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=
                 $body.append($h1);
 		$body.append($p);      
                 $body.append('<hr>');
-                vendedores = vendedores.sort(function(a, b) {
-                  if ( a.address.district < b.address.district) {
-                    return -1;
-                  } else if (a.address.district > b.address.district) {
-                    return 1;
-                  }
-                  return 0;
-                  
-                });
+                
                 $table = jQuery("<table class='table table-bordered table-condensed'><thead><tr>"
                                 + "<th>Bairro - Cidade</th>"
                                 + "<th>Login</th>"

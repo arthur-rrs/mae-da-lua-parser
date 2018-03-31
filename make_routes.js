@@ -39,7 +39,7 @@ function transformXmlInJson(data) {
 
 function printSellers(sellers) {
 	let size = sellers.length;
-	let $body = mounttable(sellers[0].collector);
+	let $body = mounttable(sellers[0].collector, size);
 	let $tbody = $body.find('tbody');
 	let seller = null;
 	for (let index = 0; index < size; index++) {
@@ -60,7 +60,7 @@ function printSellers(sellers) {
 	}
 }
 
-function mounttable(collector) {
+function mounttable(collector, size) {
 	jQuery('head').empty();
 	jQuery('head').append('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">');
 	let $body = jQuery('body');
@@ -72,6 +72,7 @@ function mounttable(collector) {
 	$body.append('<div class="row"><div class="col-md-12"><h5>Avisos </h5></div>');
 	$body.append('<div class="row"><div class="col-md-12"><textarea class="form-control"></textarea></div>');
 	$body.append('<hr>');
+	$body.append('<div class="row"><div class="col-md-12"><p><small>Quantidade atual de vendedores: ' + size + '</small></p></div></div>');
 	let table = '<div class="row"><div class="col-md-12"><table class="table table-bordered">' +
 			          '<thead>' +
 			              '<tr>' +

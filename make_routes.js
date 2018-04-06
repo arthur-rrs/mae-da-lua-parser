@@ -31,7 +31,7 @@ function transformXmlInJson(data) {
 			othersInfo: row[21].innerHTML.split('@'),
 			collector: this,
 		};
-		console.log(row[index].children);
+		console.log(row);
 		json.push(seller);
 	}
 

@@ -30,8 +30,9 @@ function transformXmlInJson(data) {
 			terminais: row[23].innerHTML,
 			othersInfo: row[21].innerHTML.split('@'),
 			collector: this,
+			updateDate: row[3].innerHTML
 		};
-		console.log(row);
+		console.log(seller);
 		json.push(seller);
 	}
 

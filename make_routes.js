@@ -29,8 +29,9 @@ function transformXmlInJson(data) {
 			login: row[19].innerHTML,
 			terminais: row[23].innerHTML,
 			othersInfo: row[21].innerHTML.split('@'),
-			collector: this
+			collector: this,
 		};
+		console.log(row[index].children);
 		json.push(seller);
 	}
 

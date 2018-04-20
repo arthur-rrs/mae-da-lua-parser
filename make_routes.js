@@ -46,6 +46,10 @@ function printSellers(sellers) {
 	let seller = null;
 	for (let index = 0; index < size; index++) {
 		seller = sellers[index];
+		let isNewSeller =  seller.updateDate > ( Date.now() - 604800000 );
+		if (isNewSeller) {
+		  seller.namefull = '<b>' + seller.namefull + '</b>';	
+		}
 		$row = '<tr>' + 
 			       '<td>' + seller.code + '</td>' +
 			       '<td>' + seller.namefull + '</td>' +
@@ -67,7 +71,7 @@ function transformToDate(updateInfo) {
    var month = 	parseInt(updateInfo.substring(3, 5), 10) - 1; 
    var year = parseInt(updateInfo.substring(6, 10), 10);
 	
-   return new Date(year, month, day);	
+   return (new Date(year, month, day)).getTime();	
 }
 
 function mounttable(collector, size) {

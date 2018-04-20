@@ -30,7 +30,7 @@ function transformXmlInJson(data) {
 			terminais: row[23].innerHTML,
 			othersInfo: row[21].innerHTML.split('@'),
 			collector: this,
-			updateDate: row[3].innerHTML
+			updateDate: transformToDate(row[3].innerHTML)
 		};
 		console.log(seller);
 		json.push(seller);
@@ -60,6 +60,14 @@ function printSellers(sellers) {
 			     '</tr>';
 		$tbody.append($row);
 	}
+}
+
+function transformToDate(updateInfo) {
+   var day = parseInt(updateInfo.substring(0, 2), 10);
+   var month = 	parseInt(updateInfo.substring(3, 5), 10) - 1; 
+   var year = parseInt(updateInfo.substring(6, 10), 10);
+	
+   return new Date(year, month, day);	
 }
 
 function mounttable(collector, size) {

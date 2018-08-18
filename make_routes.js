@@ -84,7 +84,7 @@ function mounttable(collector, size) {
 	$body.append('<div class="row"><div class="col-md-12"><h1>Rota de Arrecadação </h1></div>');
 	$body.append('<div class="row"><div class="col-md-12"><h4>' + collector.name + '</h4></div></div>');
 	$body.append('<div class="row"><div class="col-md-12"><h5>Avisos </h5></div>');
-	$body.append('<div class="row"><div class="col-md-12"><textarea style="font-size:16px;font-weight: bold;" class="form-control"></textarea></div>');
+	$body.append('<div class="row"><div class="col-md-12"><textarea style="font-size:30px;font-weight: bold;" class="form-control"></textarea></div>');
 	$body.append('<hr>');
 	$body.append('<div class="row"><div class="col-md-12"><p><small>Quantidade atual de vendedores: ' + size + '</small></p></div></div>');
 	let table = '<div class="row"><div class="col-md-12"><table class="table table-bordered">' +

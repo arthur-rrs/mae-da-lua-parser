@@ -50,6 +50,8 @@ function printSellers(sellers) {
 		if (isNewSeller) {
 		  seller.namefull = '<b>' + seller.namefull + '</b>';	
 		}
+		let phones = seller.othersInfo[5].split('-');
+		console.log(phones);
 		$row = '<tr>' + 
 			       '<td>' + seller.code + '</td>' +
 			       '<td>' + seller.namefull + '</td>' +

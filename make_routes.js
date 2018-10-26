@@ -66,7 +66,7 @@ function printSellers(sellers) {
 		}
 		$row = '<tr>' + 
 			       '<td>' + seller.code + '</td>' +
-			       '<td>' + seller.namefull + '</td>' +
+			       '<td>' + seller.name + '</td>' +
 			       '<td>' + seller.terminais + '</td>' +
 						 '<td>' + seller.login + '</td>' +
 						 '<td>' + 

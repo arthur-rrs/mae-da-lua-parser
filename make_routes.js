@@ -21,6 +21,7 @@ function transformXmlInJson(data) {
 	let seller = {};
 	for (let index = 0; index < size; index++) {
 		row = rows[index].children;
+		console.log(row);
 		seller = {
 			id: row[1].innerHTML,
 			code: row[9].innerHTML,
@@ -32,7 +33,6 @@ function transformXmlInJson(data) {
 			collector: this,
 			updateDate: transformToDate(row[3].innerHTML)
 		};
-		console.log(seller);
 		json.push(seller);
 	}
 

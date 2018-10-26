@@ -24,12 +24,12 @@ function transformXmlInJson(data) {
 		console.log(row);
 		seller = {
 			id: row[1].innerHTML,
-			code: row[9].innerHTML,
-			name: row[7].innerHTML,
+			code: row[10].innerHTML,
+			name: row[9].innerHTML,
 			namefull: row[8].innerHTML,
-			login: row[19].innerHTML,
-			terminais: row[23].innerHTML,
-			othersInfo: row[21].innerHTML.split('@'),
+			login: row[21].innerHTML,
+			terminais: row[25].innerHTML,
+			othersInfo: row[23].innerHTML.split('@'),
 			collector: this,
 			updateDate: transformToDate(row[3].innerHTML)
 		};

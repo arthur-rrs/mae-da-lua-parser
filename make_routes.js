@@ -74,7 +74,7 @@ function printSellers(sellers) {
 								seller.othersInfo[1] + ' . ' +
 								seller.othersInfo[4] + ' . ' +
 						 '</td>' +
-						 '<td>' + phonesOutput + '</td>' +
+						 '<td  width="60px">' + phonesOutput + '</td>' +
 			     '</tr>';
 		$tbody.append($row);
 	}
@@ -108,7 +108,7 @@ function mounttable(collector, size) {
 			                '<th>Nome</th>'+
 			                '<th>Terminais</th>'+
 			                '<th>Endereco</th>'+
-					'<th>Telefone</th>'+
+					'<th  width="60px">Telefone</th>'+
 			              '</tr>' +
 			          '</thead>' +
 				  '<tbody>' + 

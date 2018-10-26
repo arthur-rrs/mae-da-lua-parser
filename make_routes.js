@@ -55,16 +55,15 @@ function printSellers(sellers) {
 		if (isNewSeller) {
 		  seller.namefull = '<b>' + seller.namefull + '</b>';	
 		}
-		let phonesOutput = '<ul>';
+		let phonesOutput = '';
 		let phones = seller.othersInfo[5].split('-');
 		for (let phoneIndex = 0; phoneIndex < phones.length; phoneIndex++) {
 		  if (phones[phoneIndex] == "") {
 		     continue; 
 		  }
-		  phonesOutput += '<li>' + transformPhone( phones[phoneIndex] ) + '</li>';
+		  phonesOutput += transformPhone( phones[phoneIndex] ) + '<br>';
 			
 		}
-		phonesOutput += '</ul>';
 		$row = '<tr>' + 
 			       '<td>' + seller.code + '</td>' +
 			       '<td>' + seller.namefull + '</td>' +

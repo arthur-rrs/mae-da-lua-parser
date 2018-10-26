@@ -68,8 +68,8 @@ function printSellers(sellers) {
 			       '<td>' + seller.code + '</td>' +
 			       '<td>' + seller.name + '</td>' +
 			       '<td>' + seller.terminais + '</td>' +
-						 '<td>' + seller.login + '</td>' +
-						 '<td>' + 
+						 
+			       '<td>' + 
 								seller.othersInfo[0] + ' . ' +
 								seller.othersInfo[1] + ' . ' +
 								seller.othersInfo[4] + ' . ' +
@@ -107,12 +107,11 @@ function mounttable(collector, size) {
 			                '<th>Codigo</th>'+
 			                '<th>Nome</th>'+
 			                '<th>Terminais</th>'+
-			                '<th>Login</th>'+
 			                '<th>Endereco</th>'+
-											'<th>Telefone</th>'+
+					'<th>Telefone</th>'+
 			              '</tr>' +
 			          '</thead>' +
-								'<tbody>' + 
+				  '<tbody>' + 
 			          '</tbody>' +
 			        '</table></div></div>';
 	$body.append(table);

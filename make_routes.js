@@ -12,7 +12,12 @@ function getSellers(collector) {
 		success: printSellers
 	});
 }
-
+function transformPhone(phone) {
+    phone=phone.replace(/\D/g,"");             //Remove tudo o que não é dígito
+    phone=phone.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+    phone=phone.replace(/(\d)(\d{4})$/,"$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+    return phone;
+} 
 function transformXmlInJson(data) {
 	let rows = data.children[0].children;
 	let json = [];
@@ -50,8 +55,16 @@ function printSellers(sellers) {
 		if (isNewSeller) {
 		  seller.namefull = '<b>' + seller.namefull + '</b>';	
 		}
+		let phonesOutput = '<ul>';
 		let phones = seller.othersInfo[5].split('-');
-		console.log(phones);
+		for (let phoneIndex = 0; phoneIndex < phones.length; phoneIndex++) {
+		  if (phones[phoneIndex] == "") {
+		     continue; 
+		  }
+		  phonesOutput += '<li>' + transformPhone( phones[phoneIndex] ) + '</li>';
+			
+		}
+		phonesOutput += '</ul>';
 		$row = '<tr>' + 
 			       '<td>' + seller.code + '</td>' +
 			       '<td>' + seller.namefull + '</td>' +
@@ -62,7 +75,7 @@ function printSellers(sellers) {
 								seller.othersInfo[1] + ' . ' +
 								seller.othersInfo[4] + ' . ' +
 						 '</td>' +
-						 '<td>' + seller.othersInfo[5] + '</td>' +
+						 '<td>' + phonesOutput + '</td>' +
 			     '</tr>';
 		$tbody.append($row);
 	}

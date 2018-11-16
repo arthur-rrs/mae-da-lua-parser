@@ -1,5 +1,5 @@
 function getUrl(collector) {
-	let url = 'http://gestor.dasorte.com/redepos/comum-vendedor/dados?enderecos=1&id_modelo=270&secao=principal&parametros=id_arrecadador:arrecadador:Arrecadador:IGUAL:%id::%name::false:;&results=50&sortCol=codigo&sortDir=ASC&startIndex=0&__seq=490241';
+	let url = 'http://gestor.dasorte.com/redepos/comum-vendedor/dados?enderecos=1&id_modelo=270&secao=principal&parametros=id_arrecadador:arrecadador:Arrecadador:IGUAL:%id::%name::false:;&results=100&sortCol=codigo&sortDir=ASC&startIndex=0&__seq=490241';
 	let newurl = url.replace('%id', collector.id).replace('%name', collector.name);
 	
 	return newurl;

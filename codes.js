@@ -27,22 +27,21 @@ function resolveResponse(body) {
        code++;
     }
     for (let index = 0; index < sellers.length; index++) {
-        console.log('ok');
-        
         persistSeller({
-            "codigo" : (900+index),
+            "codigo" : (100+index),
             "id"   : sellers[index].id,
             "estado" : "PE",
             "id_supervisor": 866,
             "id_arrecadador": idCollector        
         });
     }    
-    console.log(sellers);
+   
     let index = sellers.length - 1;
     while (index > -1) {
         persistSeller(sellers[index]);
         index--;    
     }
+    alert("Processo Terminado!");
 }
 
 function persistSeller(body) {

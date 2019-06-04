@@ -59,7 +59,7 @@ function resolveResponse(body) {
         index--;    
     }
 }
-
+}
 function persistSeller(body) {
     jQuery.ajax(POST_SELLER, {
         contentType : "application/x-www-form-urlencoded",

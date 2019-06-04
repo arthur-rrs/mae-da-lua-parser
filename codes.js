@@ -1,4 +1,4 @@
-const POST_SELLER = "http://gestor.dasorte.com/redepos/comum-vendedor/salvar";
+var POST_SELLER = "http://gestor.dasorte.com/redepos/comum-vendedor/salvar";
 let sellers = [];
 let startCodeSeller = null;
 let codeAvailable = null;
@@ -18,6 +18,7 @@ function resolveResponse(body) {
     let code = startCodeSeller;
     let rows = body.children[0].children;
     for (let index = 0; index < rows.length; index++) {
+       console.log(rows.length);
        if (code === codeAvailable) {
            code += 1;
        }
@@ -31,7 +32,7 @@ function resolveResponse(body) {
        code++;
     }
     for (let index = 0; index < sellers.length; index++) {
-        console.log('ok');
+  
         if (code >= 1000) {
 		persistSeller({
 		    "codigo" : (900+index),

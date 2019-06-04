@@ -22,26 +22,42 @@ function resolveResponse(body) {
            code += 1;
        }
        const element = transformInJSON(rows[index]);
-       element.codigo = '0' + code;
+       if (code < 1000) {
+          element.codigo = '0' + code;
+       if (code >= 1000) {
+          element.codigo = code;
+       }        
        sellers.push(element);
        code++;
     }
     for (let index = 0; index < sellers.length; index++) {
-        persistSeller({
-            "codigo" : (100+index),
-            "id"   : sellers[index].id,
-            "estado" : "PE",
-            "id_supervisor": 866,
-            "id_arrecadador": idCollector        
-        });
+        console.log('ok');
+        if (code >= 1000) {
+		persistSeller({
+		    "codigo" : (900+index),
+		    "id"   : sellers[index].id,
+		    "estado" : "PE",
+		    "id_supervisor": 866,
+		    "id_arrecadador": idCollector,
+		     "tipo": "0"		
+		});
+	}
+        else {
+		persistSeller({
+		    "codigo" : (900+index),
+		    "id"   : sellers[index].id,
+		    "estado" : "PE",
+		    "id_supervisor": 866,
+		    "id_arrecadador": idCollector        
+		});
+	}
     }    
-   
+    console.log(sellers);
     let index = sellers.length - 1;
     while (index > -1) {
         persistSeller(sellers[index]);
         index--;    
     }
-    alert("Processo Terminado!");
 }
 
 function persistSeller(body) {
@@ -57,7 +73,7 @@ function persistSeller(body) {
 }
 
 function getUrl(collector) {
-	let url = 'http://gestor.dasorte.com/redepos/comum-vendedor/dados?enderecos=1&id_modelo=270&secao=principal&parametros=id_arrecadador:arrecadador:Arrecadador:IGUAL:%id::%name::false:;&results=100&sortCol=codigo&sortDir=ASC&startIndex=0&__seq=490241';
+	let url = 'http://gestor.dasorte.com/redepos/comum-vendedor/dados?enderecos=1&id_modelo=270&secao=principal&parametros=id_arrecadador:arrecadador:Arrecadador:IGUAL:%id::%name::false:;&results=1000&sortCol=codigo&sortDir=ASC&startIndex=0&__seq=490241';
 	let newurl = url.replace('%id', collector.id).replace('%name', collector.name);
 	
 	return newurl;
@@ -77,7 +93,8 @@ function main() {
 		{id: 1262, name: '04 - Ponte dos Carvalhos 02', code: 700},
 		{id: 1589, name: '12 - Praias Cabo', code: 500},
 		{id: 1522, name: '11 - Ipojuca', code: 400},
-		{id: 1203, name: '01 - Escritorio', code: 000}
+		{id: 1203, name: '01 - Escritorio', code: 000},
+		{id: 1803, name: '1000 - Desistentes', code: 1000}
 	];
 	let info = 'Informe o Arrecadador';
 	for (let index = 0; index < collectors.length; index++) {

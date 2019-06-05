@@ -35,7 +35,7 @@ function resolveResponse(body) {
 
         if (code >= 1000) {
             persistSeller({
-                "codigo": (900 + index),
+                "codigo": (300 + index),
                 "id": sellers[index].id,
                 "estado": "PE",
                 "id_supervisor": 866,

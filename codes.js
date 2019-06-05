@@ -25,7 +25,7 @@ function resolveResponse(body) {
        const element = transformInJSON(rows[index]);
        if (code < 1000) {
           element.codigo = '0' + code;
-       if (code >= 1000) {
+       } if (code >= 1000) {
           element.codigo = code;
        }        
        sellers.push(element);

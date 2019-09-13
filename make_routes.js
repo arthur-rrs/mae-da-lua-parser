@@ -32,9 +32,9 @@ function transformXmlInJson(data) {
 			code: row[10].innerHTML,
 			name: row[9].innerHTML,
 			namefull: row[8].innerHTML,
-			login: row[21].innerHTML,
-			terminais: row[25].innerHTML,
-			othersInfo: row[23].innerHTML.split('@'),
+			login: row[23].innerHTML,
+			terminais: row[27].innerHTML,
+			othersInfo: row[25].innerHTML.split('@'),
 			collector: this,
 			updateDate: transformToDate(row[3].innerHTML)
 		};

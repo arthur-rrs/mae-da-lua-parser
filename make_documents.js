@@ -30,7 +30,7 @@ function transformXmlInJson(data) {
 			login: row[23].innerHTML,
 			code: row[10].innerHTML,
 			name: row[9].innerHTML,
-			address: row[27].innerHTML.replace(/[@]/g, ',').(/[0-9]{10,11}/g, ''),
+			address: row[27].innerHTML.replace(/[@]/g,",").(/[0-9]{10,11}/g,""),
 			phones: row[27].innerHTML.match(/[0-9]{10,11}/g).toString(),
 			terminais: row[29].innerHTML,
 			route: row[18].innerHTML

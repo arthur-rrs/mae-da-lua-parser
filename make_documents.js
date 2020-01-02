@@ -27,15 +27,13 @@ function transformXmlInJson(data) {
 	for (let index = 0; index < size; index++) {
 		row = rows[index].children;
 		seller = {
-			id: row[1].innerHTML,
+			login: row[23].innerHTML,
 			code: row[10].innerHTML,
 			name: row[9].innerHTML,
-			namefull: row[8].innerHTML,
-			login: row[23].innerHTML,
-			terminais: row[27].innerHTML,
-			othersInfo: row[25].innerHTML.split('@'),
-			collector: this,
-			updateDate: transformToDate(row[3].innerHTML)
+			address: row[27].innerHTML,
+			phones: row[27].innerHTML,
+			terminais: row[29].innerHTML,
+			route: row[18].innerHTML
 		};
 		json.push(seller);
 	}
@@ -44,6 +42,7 @@ function transformXmlInJson(data) {
 }
 
 function printSellers(sellers) {
+	alert(sellers[0].address);
 	jQuery.ajaxSetup({
 		global: false,
 		contentType: 'application/json'

@@ -1,224 +1,112 @@
-function xmlToJson(xml) {
+function getUrl(collector) {
+	let url = 'http://gestor.dasorte.com/redepos/comum-vendedor/dados?enderecos=1&id_modelo=270&secao=principal&parametros=id_arrecadador:arrecadador:Arrecadador:IGUAL:%id::%name::false:;&results=100&sortCol=codigo&sortDir=ASC&startIndex=0&__seq=490241';
+	let newurl = url.replace('%id', collector.id).replace('%name', collector.name);
 	
-	// Create the return object
-	var obj = {};
+	return newurl;
+}
 
-	if (xml.nodeType == 1) { // element
-		// do attributes
-		if (xml.attributes.length > 0) {
-		obj["@attributes"] = {};
-			for (var j = 0; j < xml.attributes.length; j++) {
-				var attribute = xml.attributes.item(j);
-				obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-			}
-		}
-	} else if (xml.nodeType == 3) { // text
-		obj = xml.nodeValue;
+function getSellers(collector) {
+	url = getUrl(collector); 
+	jQuery.ajax(url, {
+		dataFilter: transformXmlInJson.bind(collector),
+		success: printSellers
+	});
+}
+function transformPhone(phone) {
+    phone=phone.replace(/\D/g,"");             //Remove tudo o que não é dígito
+    phone=phone.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+    phone=phone.replace(/(\d)(\d{4})$/,"$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
+    return phone;
+} 
+function transformXmlInJson(data) {
+	let rows = data.children[0].children;
+	let json = [];
+	let size = rows.length;
+	let row = null;
+	let seller = {};
+	for (let index = 0; index < size; index++) {
+		row = rows[index].children;
+		console.log(row);
+		seller = {
+			id: row[1].innerHTML,
+			code: row[10].innerHTML,
+			name: row[9].innerHTML,
+			namefull: row[8].innerHTML,
+			login: row[23].innerHTML,
+			terminais: row[27].innerHTML,
+			othersInfo: row[25].innerHTML.split('@'),
+			collector: this,
+			updateDate: transformToDate(row[3].innerHTML)
+		};
+		json.push(seller);
 	}
 
-	// do children
-	if (xml.hasChildNodes()) {
-		for(var i = 0; i < xml.childNodes.length; i++) {
-			var item = xml.childNodes.item(i);
-			var nodeName = item.nodeName;
-			if (typeof(obj[nodeName]) == "undefined") {
-				obj[nodeName] = xmlToJson(item);
-			} else {
-				if (typeof(obj[nodeName].push) == "undefined") {
-					var old = obj[nodeName];
-					obj[nodeName] = [];
-					obj[nodeName].push(old);
-				}
-				obj[nodeName].push(xmlToJson(item));
-			}
-		}
+	return json;
+}
+
+function printSellers(sellers) {
+	let size = sellers.length;
+	jQuery.post("http://127.0.0.1:8080", sellers, function(response) {
+		console.log(response);
+		console.log("foi enviado");
+	});	
+}
+
+function transformToDate(updateInfo) {
+   var day = parseInt(updateInfo.substring(0, 2), 10);
+   var month = 	parseInt(updateInfo.substring(3, 5), 10) - 1; 
+   var year = parseInt(updateInfo.substring(6, 10), 10);
+	
+   return (new Date(year, month, day)).getTime();	
+}
+
+function mounttable(collector, size) {
+	jQuery('head').empty();
+	jQuery('head').append('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">');
+	let $body = jQuery('body');
+	$body.css('background-color', 'white');
+	$body.addClass('container');
+	$body.empty();
+	$body.append('<div class="row"><div class="col-md-12"><h1>Rota de Arrecadação </h1></div>');
+	$body.append('<div class="row"><div class="col-md-12"><h4>' + collector.name + '</h4></div></div>');
+	$body.append('<div class="row"><div class="col-md-12"><h5>Avisos </h5></div>');
+	$body.append('<div class="row"><div class="col-md-12"><textarea style="font-size:30px;font-weight: bold;" class="form-control"></textarea></div>');
+	$body.append('<hr>');
+	$body.append('<div class="row"><div class="col-md-12"><p><small>Quantidade atual de vendedores: ' + size + '</small></p></div></div>');
+	let table = '<div class="row"><div class="col-md-12"><table class="table table-bordered">' +
+			          '<thead>' +
+			              '<tr>' +
+			                '<th>Codigo</th>'+
+			                '<th>Nome</th>'+
+			                '<th>Terminais</th>'+
+			                '<th>Endereco</th>'+
+					'<th  width="200px">Telefone</th>'+
+			              '</tr>' +
+			          '</thead>' +
+				  '<tbody>' + 
+			          '</tbody>' +
+			        '</table></div></div>';
+	$body.append(table);
+	
+	return $body;
+}
+
+function main() {
+	let collectors = [
+		{id: 1337, name: '09 - Cabo 01'},
+		{id: 1759, name: '14 - Cabo 02'},
+		{id: 1662, name: '13 - Ponte dos Carvalhos 01'},
+		{id: 1262, name: '04 - Ponte dos Carvalhos 02'},
+		{id: 1589, name: '12 - Praias Cabo'},
+		{id: 1522, name: '11 - Ipojuca'},
+		{id: 1203, name: '01 - Escritorio'}
+	];
+	let info = 'Informe o Arrecadador';
+	for (let index = 0; index < collectors.length; index++) {
+	info += '\n' + index + ' ' + collectors[index].name;
 	}
-	return obj;
-};
+	let id = prompt(info);
+	getSellers(collectors[id]);
+}
 
-function encode(str) {
-  return str.replace(/\\u00e9/g, '&eacute;')
-                  .replace(/\\u00f3/g, '&ocirc;')
-                  .replace(/\\u00d3/g, '&oacute;')
-                  .replace(/\\u00e2/g, '&acirc;')
-                  .replace(/\\u00ea/g, '&ecirc;')
-                  .replace('/\\u00ea/g', '&eacute')
-                  .replace(/\\u00e3/g, '&atilde;')
-                  .replace(/\\u00c3/g, '&Atilde;')
-                  .replace(/\\u00e1/g, '&aacute;')
-                  .replace(/\\u00e7/g, '&ccedil;')
-                  .replace(/\\u00fa/g, '&uacute;')
-                  .replace(/\\u00f4/g, '&ocirc;')
-                  .replace(/\\u00aa/g, '&ordf;');  
-};
-
-jQuery.get('http://gestor.dasorte.com/redepos/comum-arrecadador/dados?id_modelo=660&secao=principal&parametros=&results=50&sortCol=codigo&sortDir=ASC&startIndex=0&__seq=581604', null, function (xml) {
-  var resultInJSON = xmlToJson(xml);
-  var arrecadadores = [];
-  var option = 0;
-  var buffer = resultInJSON.ResultSet.Result;
-  var messagePrompt = 'Escolha um arrecadador para gerar sua rota:\n';
-  buffer.forEach(function(arrecadador) {
-    messagePrompt += option + ' : ' + arrecadador.nome_curto['#text'] + '\n';
-    arrecadadores.push({
-      'name'   : arrecadador.nome_curto['#text'],
-      'code'   : arrecadador.codigo['#text'],
-      'id'     : arrecadador.id['#text']
-    });
-    option++;
-  });
-  var answerPrompt = prompt(messagePrompt, 0);
-  console.log(arrecadadores[answerPrompt]);
-  jQuery.get('http://gestor.dasorte.com/redepos/comum-vendedor/dados?id_modelo=270&secao=principal&parametros=id_arrecadador%3Aarrecadador%3AArrecadador%3AIGUAL%3A'+ arrecadadores[answerPrompt].id+'%3A%3A'+arrecadadores[answerPrompt].code+'%20-%20'+ arrecadadores[answerPrompt].name+'%3A%3Afalse%3A%3B&results=100&sortCol=nome_curto&sortDir=ASC&startIndex=0&__seq=41074', null, function (bf) {
-    var vendedores = [];
-    var bfe = xmlToJson(bf).ResultSet.Result;
-    bfe.forEach( function(vendedor) {
-		if (typeof vendedor.associacao['#text'] !== 'undefined' ) {
-		  vendedores.push({
-			  id       : vendedor.id['#text'],
-			  name     : vendedor.nome_curto['#text'],
-			  login    : vendedor.login['#text'],
-			  POS      : vendedor.associacao['#text'].split(', '),
-			  idPessoa : vendedor.id_pessoa['#text'],
-			  phones : []
-			});
-		}
-    });
-    var phones = [];
-    var index = 0;
-    vendedores.forEach(function(vendedor) {
-      jQuery.get('http://gestor.dasorte.com/redepos/comum-vendedor/dados-telefone?id_pessoa= '+vendedor.idPessoa+'&parametros=&results=10&sortCol=telefone&sortDir=ASC&startIndex=0&__seq=206025', null, function(phone) {
-        bfPhone = xmlToJson(phone).ResultSet.Result;
-        if (bfPhone instanceof Array) {
-          bfPhone.forEach(function(p) {
-            phones.push(
-              {
-              
-                phone : p.telefone['#text'],
-                idPessoa : p.id_pessoa['#text']
-              });
-          });
-        } else {
-          phones.push({
-                phone : bfPhone.telefone['#text'],
-                idPessoa : bfPhone.id_pessoa['#text']
-              });
-        }
-        
-        index++;
-
-        if (index == vendedores.length) {
-          console.log('Start.');
-          phones.forEach(function(da) {
-            for (var inde = 0; inde < vendedores.length; inde++) {
-              if (vendedores[inde].idPessoa == da.idPessoa) {
-                vendedores[inde].phones.push(da.phone);
-              }
-            } 
-          });
-          jQuery.ajaxSettings.beforeSend=function(xhr){
-            xhr.setRequestHeader('X-Requested-With', {toString: function(){ return ''; }});
-          };
-          var lenf = 0;
-          var info = [];
-          vendedores.forEach(function(vend) {
-            jQuery.get('/redepos/comum-vendedor/visualizar?id='+vend.id, null, function(t) {
-              var current = {};
-              if (t.match(/\"data_hora_criacao\":\"[0-9]{2}\\\/[0-9]{2}\\\/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}\"/) !== null) {
-                mat = t.match(/\"data_hora_criacao\":\"[0-9]{2}\\\/[0-9]{2}\\\/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2}\"/)[0];
-                mat = encode(mat.replace(/\"data_hora_criacao\":\"/, '').replace('"', ''));
-                mat = mat.replace(/[0-9]{2}:[0-9]{2}:[0-9]{2}/, '').replace(/\\/g, '');
-                var day = parseInt(mat[0]  + '' + mat[1]);
-                var month = parseInt(mat[3] + '' + mat[4]) - 1;
-                var year =  parseInt( mat[6] + '' + mat[7] + mat[8] + mat[9]);
-                current.dateCreated = new Date(year, month, day);
-              }
-              if (t.match(/\"endereco":\"[A-z çáéíóúâêîôûãẽĩõũ0-9]+\"/) !== null) {
-                mat = t.match(/\"endereco":\"[A-z çáéíóúâêîôûãẽĩõũ0-9/]+\"/)[0];
-                current.address = encode(mat.replace(/\"endereco\":\"/, '').replace('"', ''));
-              }
-              if (t.match(/\"cidade":\"[A-z çáéíóúâêîôûãẽĩõũ0-9]+\"/) !== null) {
-                mat = t.match(/\"cidade":\"[A-z çáéíóúâêîôûãẽĩõũ0-9/]+\"/)[0]; 
-                current.city = encode ( mat.replace(/\"cidade\":\"/,'').replace('"', '') );
-              }
-              if (t.match(/\"data_nascimento":\"[0-9]{2}\\\/[0-9]{2}\\\/[0-9]{4}\"/) !== null) {
-                mat = t.match(/\"data_nascimento":\"[0-9]{2}\\\/[0-9]{2}\\\/[0-9]{4}\"/)[0];
-                current.dateOfBirth = mat.replace(/\"data_nascimento":\"/, '').replace('"', '');
-              }
-              if (t.match(/\"numero":\"[0-9A-z \\]+\"/) !== null) {
-                mat = t.match(/\"numero":\"[0-9A-z \\]+\"/)[0];
-                current.number = mat.replace(/\"numero":\"/, '').replace('"', '');
-              }
-              if (t.match(/\"bairro":\"[A-z çáéíóúâêîôûãẽĩõũ0-9]+\"/) !== null) {
-                mat = t.match(/\"bairro":\"[A-z çáéíóúâêîôûãẽĩõũ0-9]+\"/)[0]; 
-                current.district = encode ( mat.replace(/\"bairro":\"/, '').replace('"', '') );
-              }
-              if (t.match(/\"complemento":\"[A-z0-9 çáéíóúâêîôûãẽĩõũ.,-:;]+\"/) !== null) {
-                mat = t.match(/\"complemento":\"[A-z0-9 çáéíóúâêîôûãẽĩõũ.,-:;]+\"/)[0];
-                current.complement = encode ( mat.replace(/\"complemento":\"/, '').replace('"', '') );
-              }
-              if (t.match(/\"id_pessoa":\"[0-9]+\"/) !== null) {
-                mat = t.match(/\"id_pessoa":\"[0-9]+\"/)[0]; 
-                current.idPessoa = mat.replace(/\"id_pessoa":\"/, '').replace('"', '');
-              }
-              if (t.match(/\"nome":\"[A-z0-9 çáéíóúâêîôûãẽĩõũ.,-:;]+\"/) !== null) {
-                mat = t.match(/\"nome":\"[A-z0-9 çáéíóúâêîôûãẽĩõũ.,-:;]+\"/)[0];
-                current.name_completed = encode ( mat.replace(/\"nome":\"/, '').replace('"', '') );
-              }
-              if (t.match(/\"cpf":\"[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}\"/) !== null) {
-                mat = t.match(/\"cpf":\"[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}\"/)[0]; 
-                current.CPF = mat.replace(/\"cpf":\"/, '').replace('"', '');
-              }
-              info.push(current);
-              lenf++;
-              if (lenf == vendedores.length) {
-                info.forEach(function(add) {
-                  for (buffer = 0; buffer < vendedores.length; buffer++) {
-                    if (vendedores[buffer].idPessoa === add.idPessoa) {
-                      vendedores[buffer].address = add;
-                    } 
-                  } 
-                });
-                //Adicionar a View aqui em baixo <vendedores> e a variavel.
-                var $body = jQuery('body');
-                $body.css('background-color', 'white');
-                $body.css('font-size', '14pt');
-                $body.css('font-family', 'sans-serif');
-                $body.css('margin-left', '1pt');
-                $body.empty();
-                vendedores.forEach(function(vendedor, index) {
-	          $body.append('<hr><p>Login:' + vendedor.login + '</p>');
-                  $body.append('<p>Nome Curto(Apelido):'+ vendedor.name + '</p>');
-                  $body.append('<h1>Termo de Entrega</h1>')
-                  $body.append('<hr>');
-                  $body.append('<br>');
-                  $body.append('<p>Eu, <b><u>' + vendedor.address.name_completed  + '</b></u> sob CPF N&#730; <b><u>' + vendedor.address.CPF + '</b></u>, Recebi os seguintes equipamentos:');
-                  $body.append('<ul>');
-                  $body.append('<br>');
-                  vendedor.POS.forEach(function(pos) {
-                    $body.append('<li>POS N&#730; ' + pos + '.</li>');
-                  });
-                  $body.append('<li>' + vendedor.POS.length + ' Carregador(es).</li>');
-                  $body.append('<li>' + vendedor.POS.length + ' Chip(s) Movel de dados.</li>');
-                  $body.append('</ul>');
-                  $body.append('<br>');
-                  $body.append('<p>Em caso de extravio ou danos que provoquem a perda total ou parcial do equipamento, fico obrigado a ressarcir o propriet&#225;rio dos preju&#237;zos ocasionados.</p>');
-                  $body.append('<br>');
-                  $body.append('<p>_____________________________________________________________</p>');
-                  $body.append(vendedor.address.name_completed);
-		  $body.append('<br><br> <p>Cabo de Santo Agostinho, _______ de ______________________ de ________</p><br>');	
-                  $body.append('<hr>');
-                  if( (index+1) % 2 == 0 ) {
-                    $body.append('<p style="page-break-before: always;"></p>');
-                  }
-                });
-              
-              }
-            });
-            
-          });
-        }
-      });
-    });
-  });
-    });
+main();

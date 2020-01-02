@@ -46,6 +46,7 @@ function transformXmlInJson(data) {
 function printSellers(sellers) {
 	jQuery.ajaxSetup({
 		global: false,
+		contentType: 'application/json'
 	});
    	let url = "http://127.0.0.1:8080/seller";
 	jQuery.post(url, JSON.stringify(sellers), function(response) {

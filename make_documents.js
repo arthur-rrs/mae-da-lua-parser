@@ -26,7 +26,6 @@ function transformXmlInJson(data) {
 	let seller = {};
 	for (let index = 0; index < size; index++) {
 		row = rows[index].children;
-		console.log(row);
 		seller = {
 			id: row[1].innerHTML,
 			code: row[10].innerHTML,
@@ -46,7 +45,7 @@ function transformXmlInJson(data) {
 
 function printSellers(sellers) {
    	let url = "http:/127.0.0.1:8080/seller";
-	jQuery().post(url, sellers, function(response) {
+	jQuery.post(url, sellers, function(response) {
 		console.log(response);
 		console.log("Enviado");
 	});

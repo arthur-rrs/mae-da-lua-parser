@@ -48,7 +48,7 @@ function printSellers(sellers) {
 		global: false,
 	});
    	let url = "http://127.0.0.1:8080/seller";
-	jQuery.post(url, sellers, function(response) {
+	jQuery.post(url, JSON.stringify(sellers), function(response) {
 		console.log(response);
 		console.log("Enviado");
 	});

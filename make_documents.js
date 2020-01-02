@@ -45,11 +45,11 @@ function transformXmlInJson(data) {
 }
 
 function printSellers(sellers) {
-	let size = sellers.length;
-	jQuery.post("http://127.0.0.1:8080", sellers, function(response) {
+   	let url = "http:/127.0.0.1:8080/seller";
+	jQuery().post(url, sellers, function(response) {
 		console.log(response);
-		console.log("foi enviado");
-	});	
+		console.log("Enviado");
+	});
 }
 
 function transformToDate(updateInfo) {

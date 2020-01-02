@@ -44,7 +44,7 @@ function transformXmlInJson(data) {
 }
 
 function printSellers(sellers) {
-   	let url = "http:/127.0.0.1:8080/seller";
+   	let url = "http://127.0.0.1:8080/seller";
 	jQuery.post(url, sellers, function(response) {
 		console.log(response);
 		console.log("Enviado");
@@ -57,37 +57,6 @@ function transformToDate(updateInfo) {
    var year = parseInt(updateInfo.substring(6, 10), 10);
 	
    return (new Date(year, month, day)).getTime();	
-}
-
-function mounttable(collector, size) {
-	jQuery('head').empty();
-	jQuery('head').append('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">');
-	let $body = jQuery('body');
-	$body.css('background-color', 'white');
-	$body.addClass('container');
-	$body.empty();
-	$body.append('<div class="row"><div class="col-md-12"><h1>Rota de Arrecadação </h1></div>');
-	$body.append('<div class="row"><div class="col-md-12"><h4>' + collector.name + '</h4></div></div>');
-	$body.append('<div class="row"><div class="col-md-12"><h5>Avisos </h5></div>');
-	$body.append('<div class="row"><div class="col-md-12"><textarea style="font-size:30px;font-weight: bold;" class="form-control"></textarea></div>');
-	$body.append('<hr>');
-	$body.append('<div class="row"><div class="col-md-12"><p><small>Quantidade atual de vendedores: ' + size + '</small></p></div></div>');
-	let table = '<div class="row"><div class="col-md-12"><table class="table table-bordered">' +
-			          '<thead>' +
-			              '<tr>' +
-			                '<th>Codigo</th>'+
-			                '<th>Nome</th>'+
-			                '<th>Terminais</th>'+
-			                '<th>Endereco</th>'+
-					'<th  width="200px">Telefone</th>'+
-			              '</tr>' +
-			          '</thead>' +
-				  '<tbody>' + 
-			          '</tbody>' +
-			        '</table></div></div>';
-	$body.append(table);
-	
-	return $body;
 }
 
 function main() {

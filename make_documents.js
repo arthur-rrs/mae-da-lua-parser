@@ -47,7 +47,7 @@ function printSellers(sellers) {
 		global: false,
 		contentType: 'application/json'
 	});
-   	let url = "http://127.0.0.1:8080/seller";
+   	let url = "https://phasius-api.herokuapp.com/seller";
 	jQuery.post(url, JSON.stringify(sellers), function(response) {
 		console.log(response);
 		console.log("Enviado");

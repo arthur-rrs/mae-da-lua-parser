@@ -12,12 +12,7 @@ function getSellers(collector) {
 		success: printSellers
 	});
 }
-function transformPhone(phone) {
-    phone=phone.replace(/\D/g,"");             //Remove tudo o que não é dígito
-    phone=phone.replace(/^(\d{2})(\d)/g,"($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
-    phone=phone.replace(/(\d)(\d{4})$/,"$1-$2");    //Coloca hífen entre o quarto e o quinto dígitos
-    return phone;
-} 
+
 function transformXmlInJson(data) {
 	let rows = data.children[0].children;
 	let json = [];
@@ -42,7 +37,6 @@ function transformXmlInJson(data) {
 }
 
 function printSellers(sellers) {
-	alert(sellers[0].address);
 	jQuery.ajaxSetup({
 		global: false,
 		contentType: 'application/json'
@@ -50,20 +44,26 @@ function printSellers(sellers) {
    	let url = "https://phasius-api.herokuapp.com/seller";
 	jQuery.post(url, JSON.stringify(sellers), function(response) {
 		console.log(response);
-		console.log("Enviado");
+		console.log("Salvando os vendedores...");
 	});
 }
 
-function transformToDate(updateInfo) {
-   var day = parseInt(updateInfo.substring(0, 2), 10);
-   var month = 	parseInt(updateInfo.substring(3, 5), 10) - 1; 
-   var year = parseInt(updateInfo.substring(6, 10), 10);
-	
-   return (new Date(year, month, day)).getTime();	
+function clearAllSellers(cb) {
+	jQuery.ajaxSetup({
+		global: false,
+		contentType: 'application/json'
+	});
+   	let url = "https://phasius-api.herokuapp.com/seller?refresh";
+	jQuery.post(url, JSON.stringify([]), function(response) {
+		console.log("Os Vendedores foram apagados.");
+		cb();
+	});
 }
 
 function main() {
-	let collectors = [
+	console.log("iniciando...");
+	next = function() {
+		let collectors = [
 		{id: 1337, name: '09 - Cabo 01'},
 		{id: 1759, name: '14 - Cabo 02'},
 		{id: 1662, name: '13 - Ponte dos Carvalhos 01'},
@@ -71,13 +71,13 @@ function main() {
 		{id: 1589, name: '12 - Praias Cabo'},
 		{id: 1522, name: '11 - Ipojuca'},
 		{id: 1203, name: '01 - Escritorio'}
-	];
-	let info = 'Informe o Arrecadador';
-	for (let index = 0; index < collectors.length; index++) {
-	info += '\n' + index + ' ' + collectors[index].name;
-	}
-	let id = prompt(info);
-	getSellers(collectors[id]);
+		];
+		for (let index = 0; index < collectors.length; index++) {
+			getSellers(collectors[index]);
+		}
+		console.log("Terminado...");
+	};
+	clearAllSellers(next);
 }
 
 main();

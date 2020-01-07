@@ -26,13 +26,13 @@ function resolveResponse(body) {
           if (code < 10) {
        	  element.codigo = '000' + code;
        }
-       if (code < 100) {
+        else if (code < 100) {
        	  element.codigo = '00' + code;
        }
 	    
-        if (code < 1000) {
+        else if (code < 1000) {
             element.codigo = '0' + code;
-        } if (code >= 1000) {
+        } else if (code >= 1000) {
             element.codigo = code;
         }
         sellers.push(element);

@@ -23,6 +23,13 @@ function resolveResponse(body) {
             code += 1;
         }
         const element = transformInJSON(rows[index]);
+          if (code < 10) {
+       	  element.codigo = '000' + code;
+       }
+       if (code < 100) {
+       	  element.codigo = '00' + code;
+       }
+	    
         if (code < 1000) {
             element.codigo = '0' + code;
         } if (code >= 1000) {

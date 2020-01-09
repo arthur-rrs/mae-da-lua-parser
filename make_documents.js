@@ -74,10 +74,13 @@ function main() {
 		{id: 1522, name: '11 - Ipojuca'},
 		{id: 1203, name: '01 - Escritorio'}
 		];
+		getSellers(collectors[0]);
+		/**
 		for (let index = 0; index < collectors.length; index++) {
 		
 			getSellers(collectors[index]);
 		}
+		*/
 	};
 	clearAllSellers(next);
 }

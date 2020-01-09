@@ -39,6 +39,8 @@ function transformXmlInJson(data) {
 }
 
 function printSellers(sellers) {
+	console.info( "Vendedores Iniciados");
+	console.log( sellers );
 	jQuery.ajaxSetup({
 		global: false,
 		contentType: 'application/json'

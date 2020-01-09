@@ -1,4 +1,6 @@
 function getUrl(collector) {
+	console.info("Arrecadadores");
+	console.log(collector);
 	let url = 'http://gestor.dasorte.com/redepos/comum-vendedor/dados?enderecos=1&id_modelo=270&secao=principal&parametros=id_arrecadador:arrecadador:Arrecadador:IGUAL:%id::%name::false:;&results=100&sortCol=codigo&sortDir=ASC&startIndex=0&__seq=490241';
 	let newurl = url.replace('%id', collector.id).replace('%name', collector.name);
 	
@@ -73,9 +75,9 @@ function main() {
 		{id: 1203, name: '01 - Escritorio'}
 		];
 		for (let index = 0; index < collectors.length; index++) {
+		
 			getSellers(collectors[index]);
 		}
-		console.log("Terminado...");
 	};
 	clearAllSellers(next);
 }

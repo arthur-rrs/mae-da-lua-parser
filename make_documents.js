@@ -11,6 +11,11 @@ function getSellers(collector) {
 	url = getUrl(collector); 
 	jQuery.ajax(url, {
 		dataFilter: transformXmlInJson.bind(collector),
+		error: function(jqXHR, textStatus, errorThrown ) {
+			console.info("Houve um erro");
+			console.log(textStatus);
+			console.log(errorThrown);
+		},
 		success: printSellers
 	});
 }

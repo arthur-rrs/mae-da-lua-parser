@@ -21,6 +21,7 @@ function getSellers(collector) {
 }
 
 function transformXmlInJson(data) {
+	console.log(data);
 	let rows = data.children[0].children;
 	let json = [];
 	let size = rows.length;

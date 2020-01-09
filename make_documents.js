@@ -21,7 +21,7 @@ function getSellers(collector) {
 }
 
 function transformXmlInJson(data) {
-	console.log(data);
+	
 	let rows = data.children[0].children;
 	let json = [];
 	let size = rows.length;
@@ -29,6 +29,7 @@ function transformXmlInJson(data) {
 	let seller = {};
 	for (let index = 0; index < size; index++) {
 		row = rows[index].children;
+		console.log(row);
 		seller = {
 			login: row[23].innerHTML,
 			code: row[10].innerHTML,

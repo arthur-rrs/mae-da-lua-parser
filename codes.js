@@ -1,4 +1,4 @@
-var POST_SELLER = "http://gestor.dasorte.com/redepos/comum-vendedor/salvar";
+let POST_SELLER = "http://gestor.dasorte.com/redepos/comum-vendedor/salvar";
 let sellers = [];
 let startCodeSeller = null;
 let codeAvailable = null;

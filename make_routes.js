@@ -78,7 +78,7 @@ function printSellers(sellers) {
 						 '</td>' +
 						 '<td  width="200px">' + phonesOutput + '</td>' +
 			     '</tr>';
-		txtWhatsapp += "* " + seller.name + " - " + seller.name + "*\n" + "Telefones: " + phonesOutput + "\nTerminais: " + seller.terminais + "\n-----\n";	
+		txtWhatsapp += "*" + seller.code + " - " + seller.name + "*\n" + "Telefones: " + phonesOutput.replaceAll("<br>", ",") + "\nTerminais: " + seller.terminais + "\n-----\n";	
 		$tbody.append($row);
 	}
 	console.log(txtWhatsapp);

@@ -1,3 +1,4 @@
+
 function getUrl(collector) {
 	let url = 'http://gestor.dasorte.com/redepos/comum-vendedor/dados?enderecos=1&id_modelo=270&secao=principal&parametros=id_arrecadador:arrecadador:Arrecadador:IGUAL:%id::%name::false:;&results=100&sortCol=codigo&sortDir=ASC&startIndex=0&__seq=490241';
 	let newurl = url.replace('%id', collector.id).replace('%name', collector.name);
@@ -49,6 +50,7 @@ function printSellers(sellers) {
 	let $body = mounttable(sellers[0].collector, size);
 	let $tbody = $body.find('tbody');
 	let seller = null;
+	let txtWhatsapp = "*-Rota: " + sellers[0].collector + "-*";
 	for (let index = 0; index < size; index++) {
 		seller = sellers[index];
 		let isNewSeller =  seller.updateDate > ( Date.now() - 604800000 );
@@ -76,8 +78,10 @@ function printSellers(sellers) {
 						 '</td>' +
 						 '<td  width="200px">' + phonesOutput + '</td>' +
 			     '</tr>';
+		txtWhatsapp += "* " + seller.name + " - " + seller.name + "*\n" + "Telefones: " + phonesOutput + "\nTerminais: " + seller.terminais + "\n-----\n";	
 		$tbody.append($row);
 	}
+	console.log(txtWhatsapp);
 }
 
 function transformToDate(updateInfo) {

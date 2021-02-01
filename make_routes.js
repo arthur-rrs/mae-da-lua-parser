@@ -50,7 +50,7 @@ function printSellers(sellers) {
 	let $body = mounttable(sellers[0].collector, size);
 	let $tbody = $body.find('tbody');
 	let seller = null;
-	let txtWhatsapp = "*-Rota: " + sellers[0].collector + "-*";
+	let txtWhatsapp = "*-Rota: " + sellers[0].collector.name + "-*\n";
 	for (let index = 0; index < size; index++) {
 		seller = sellers[index];
 		let isNewSeller =  seller.updateDate > ( Date.now() - 604800000 );

@@ -17,8 +17,10 @@ function transformInJSON(data) {
 function resolveResponse(body) {
     let code = startCodeSeller;
     let rows = body.children[0].children;
+    console.log("Quantidade de Vendedores, " + rows.length);
+    console.log("Init...");
     for (let index = 0; index < rows.length; index++) {
-        console.log(rows.length);
+        
         if (code === codeAvailable) {
             code += 1;
         }
@@ -62,12 +64,14 @@ function resolveResponse(body) {
             });
         }
     }
-    console.log(sellers);
+  
     let index = sellers.length - 1;
     while (index > -1) {
+	console.log(sellers[index]);
         persistSeller(sellers[index]);
         index--;
     }
+    console.info("Finished..");
 }
 
 function persistSeller(body) {
@@ -115,7 +119,7 @@ function main() {
     startCodeSeller = collectors[id].code;
     idCollector = collectors[id].id;
     getSellers(collectors[id]);
-    console.info("Finished," + collectors[id].name);
+  
 }
 
 main();

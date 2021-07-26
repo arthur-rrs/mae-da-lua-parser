@@ -10,7 +10,8 @@ function transformInJSON(data) {
         "id": data[1].innerHTML,
         "estado": "PE",
         "id_supervisor": 866,
-        "id_arrecadador": idCollector
+        "id_arrecadador": idCollector,
+	"permitir_reabertura" : 0    
     };
 }
 

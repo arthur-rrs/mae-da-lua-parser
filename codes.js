@@ -47,7 +47,8 @@ function resolveResponse(body) {
                 "estado": "PE",
                 "id_supervisor": 866,
                 "id_arrecadador": idCollector,
-                "tipo": "0"
+                "tipo": "0",
+		"permitir_reabertura" : "0"
             });
         }
         else {
@@ -56,7 +57,8 @@ function resolveResponse(body) {
                 "id": sellers[index].id,
                 "estado": "PE",
                 "id_supervisor": 866,
-                "id_arrecadador": idCollector
+                "id_arrecadador": idCollector,
+		"permitir_reabertura" : "0"
             });
         }
     }
@@ -113,6 +115,7 @@ function main() {
     startCodeSeller = collectors[id].code;
     idCollector = collectors[id].id;
     getSellers(collectors[id]);
+    console.info("Finished," + collectors[id].name);
 }
 
 main();

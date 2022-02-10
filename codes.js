@@ -56,7 +56,7 @@ function resolveResponse(body) {
         }
         else {
             persistSeller({
-                "codigo": (820 + index),
+                "codigo": (10000 + index),
                 "id": sellers[index].id,
                 "estado": "PE",
                 "id_supervisor": 866,
